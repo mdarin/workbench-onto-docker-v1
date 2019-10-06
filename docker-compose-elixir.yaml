@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  proper-application:
+    container_name: proper-application
+    build: .
+    volumes:
+      - ./prj:/app
+    networks:
+      - elixir-network
+
+networks: 
+  elixir-network:
+    external: true

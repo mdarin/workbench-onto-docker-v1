@@ -1,0 +1,49 @@
+version: '2.4'
+
+services:
+## образ СУБД
+#  long-ski-postgres:
+#    container_name: long-ski-postgres
+#    image: postgres:9.3
+#    volumes:
+#      - ./var/postgres/data:/var/lib/postgresql/data
+#    environment:
+#      PGDATA: /var/lib/postgresql/data
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: long_ski
+#    ports:
+#      - 5432:5432
+#    networks:
+#      - long-ski-network
+
+  template-application:
+    container_name: template-application
+    build: ./docker/erlang
+    volumes:
+      - ./app:/app
+# необходимо сгенерирвоать сертификат (дать команду)
+# и добавить этот сетификат в настройках на гитлабе
+# это требует ментальных усилий для улучшения и является времянкой
+#     - /Users/vasary/.ssh:/home/.ssh
+    networks:
+      - template-network
+    ports:
+      - 40081:40081
+      - 40080:40080
+    command: /entrypoint.sh
+
+## Образ брокера очередей
+#  long-ski-rabbitmq:
+#    container_name: long-ski-rabbitmq
+#    build: ./docker/rabbitmq
+#    ports:
+#      - 15672:15672
+#      - 5672:5672
+#    networks:
+#      - long-ski-network
+#    command: rabbitmq-server
+
+networks: #TODO: для эрланг проекта название следует установить erlang-dev-networks для всех проектов в итересах совместимости и унификации
+  template-network:
+    external: true
+
