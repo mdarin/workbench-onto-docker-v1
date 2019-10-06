@@ -5,10 +5,11 @@ RUN echo "Elixir started"
 
 ADD ./prj /app
 
+#RUN git clone <hello_proper> 
+
 WORKDIR /app
 
 ENTRYPOINT ./entrypoint.sh
 
-#CMD --version 
-
+#CMD mix test 
 
